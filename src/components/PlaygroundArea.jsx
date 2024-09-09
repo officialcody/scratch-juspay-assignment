@@ -12,7 +12,7 @@ const PlaygroundArea = () => {
   return (
     <>
       <div className="flex flex-col col-span-2">
-        <div className="bg-gray-100 p-4 rounded-lg  relative overflow-hidden w-full h-[70%]">
+        <div className="bg-gray-100 p-4 rounded-lg relative overflow-hidden w-full h-[70%]">
           <Droppable droppableId="playgroundArea">
             {(provided) => (
               <div
