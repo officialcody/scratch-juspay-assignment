@@ -15,7 +15,7 @@ const Sidebar = () => {
               className="w-16 h-16 border-2 border-black border-solid rounded-md bg-white my-4"
               onClick={(event) => setActionCategory(category)}
             >
-              <a href={`#${category}`}>{category}</a>
+              <button>{category}</button>
             </button>
           ))}
         </nav>
