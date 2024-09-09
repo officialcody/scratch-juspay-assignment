@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import useExecutableActions from "../../hooks/useExecutableActions";
+import { useSelector } from "react-redux";
 
 const MoveX = ({ actionId, droppedData }) => {
+  const sprite = useSelector((store) => store.sprite);
   const { moveXBySteps } = useExecutableActions();
   const [steps, setSteps] = useState(droppedData ? droppedData.inputValue : 10);
 
@@ -19,7 +21,7 @@ const MoveX = ({ actionId, droppedData }) => {
     <button
       id={actionId}
       className="bg-blue-600 p-2 m-2 text-white rounded-lg flex justify-center"
-      onClick={() => moveXBySteps(steps)}
+      onClick={() => moveXBySteps(steps, sprite.active)}
       draggable
       onDragStart={handleOnDragStart}
     >
