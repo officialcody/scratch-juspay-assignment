@@ -2,9 +2,14 @@ import React from "react";
 import { useSelector } from "react-redux";
 import useExecutableActions from "../hooks/useExecutableActions";
 import { GOTO, MOVEX, MOVEY, REPEAT, TURN } from "../utils/app.constants";
+import { useDispatch } from "react-redux";
+import { setAnimations } from "../redux/slices/SpriteSlice";
 
 const Header = () => {
+  const sprite = useSelector((store) => store.sprite);
   const action = useSelector((store) => store.action);
+  const dispatch = useDispatch();
+
   const {
     moveXBySteps,
     moveYBySteps,
@@ -13,31 +18,31 @@ const Header = () => {
     repeatAllActions,
   } = useExecutableActions();
 
-  const handleOnPlay = (event) => {
-    action.actions.forEach((activity, index) => {
+  const handleOnPlay = (sprite) => {
+    action.actions.forEach((activity) => {
       const { droppedData } = activity;
       if (droppedData.actionType === MOVEX) {
-        setTimeout(() => {
-          moveXBySteps(droppedData.inputValue);
-        }, (index + 1) * 1000);
+        moveXBySteps(droppedData.inputValue, sprite);
       } else if (droppedData.actionType === MOVEY) {
-        setTimeout(() => {
-          moveYBySteps(droppedData.inputValue);
-        }, (index + 1) * 1000);
+        moveYBySteps(droppedData.inputValue, sprite);
       } else if (droppedData.actionType === TURN) {
-        setTimeout(() => {
-          turnByDegrees(droppedData.inputValue);
-        }, (index + 1) * 1000);
+        turnByDegrees(droppedData.inputValue, sprite);
       } else if (droppedData.actionType === GOTO) {
-        setTimeout(() => {
-          gotoPosition(droppedData.inputX, droppedData.inputY);
-        }, (index + 1) * 1000);
+        gotoPosition(droppedData.inputX, droppedData.inputY, sprite);
       } else if (droppedData.actionType === REPEAT) {
-        setTimeout(() => {
-          repeatAllActions(droppedData.inputValue);
-        }, (index + 1) * 1000);
+        repeatAllActions(droppedData.inputValue);
       }
     });
+  };
+
+  const handlePlayAll = async () => {
+    const addAnimations = await dispatch(
+      setAnimations({ actions: action.actions })
+    );
+    addAnimations &&
+      sprite.sprites.forEach((sprite) => {
+        handleOnPlay(sprite.id);
+      });
   };
 
   return (
@@ -53,9 +58,16 @@ const Header = () => {
           <button
             id="play-btn"
             className="bg-green-600 text-white p-2 rounded-lg justify-self-end"
-            onClick={handleOnPlay}
+            onClick={() => handleOnPlay(sprite.active)}
           >
             Play
+          </button>
+          <button
+            id="play-sprites"
+            className="bg-green-600 text-white p-2 rounded-lg justify-self-end"
+            onClick={handlePlayAll}
+          >
+            Play All Sprites
           </button>
         </div>
       </div>
