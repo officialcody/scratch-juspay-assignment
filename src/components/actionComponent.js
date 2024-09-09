@@ -3,16 +3,32 @@ import MoveX from "./motionActions/MoveX";
 import MoveY from "./motionActions/MoveY";
 import Turn from "./motionActions/Turn";
 
-function getActionComponent(spriteKey, componentId) {
+function getActionComponent(spriteKey, actionId, droppedData) {
   switch (spriteKey) {
     case "MOVEX":
-      return <MoveX componentId={componentId} />;
+      return (
+        <MoveX
+          key={actionId}
+          componentId={actionId}
+          droppedData={droppedData}
+        />
+      );
     case "TURN":
-      return <Turn componentId={componentId} />;
+      return (
+        <Turn key={actionId} componentId={actionId} droppedData={droppedData} />
+      );
     case "MOVEY":
-      return <MoveY componentId={componentId} />;
+      return (
+        <MoveY
+          key={actionId}
+          componentId={actionId}
+          droppedData={droppedData}
+        />
+      );
     case "GOTO":
-      return <Goto componentId={componentId} />;
+      return (
+        <Goto key={actionId} componentId={actionId} droppedData={droppedData} />
+      );
     default:
       return null;
   }

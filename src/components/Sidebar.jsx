@@ -24,9 +24,9 @@ const Sidebar = () => {
         <h1 className="text-xl font-bold text-wrap text-center p-2">
           Animation Options
         </h1>
-        {ACTION_CATEGORIES[actionCategory].map((action, index) => (
-          <>{getActionComponent(action)}</>
-        ))}
+        {ACTION_CATEGORIES[actionCategory].map((action, index) =>
+          getActionComponent(action, `${action}-${index}`)
+        )}
       </div>
     </div>
   );

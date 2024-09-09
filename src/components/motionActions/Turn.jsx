@@ -3,8 +3,8 @@ import { useDispatch } from "react-redux";
 import { setSpriteAngle } from "../../redux/slices/SpriteSlice";
 import { useSelector } from "react-redux";
 
-const Turn = ({ componentId }) => {
-  const [angle, setAngle] = useState(15);
+const Turn = ({ actionId, droppedData }) => {
+  const [angle, setAngle] = useState(droppedData ? droppedData.inputValue : 15);
   const sprite = useSelector((store) => store.sprite);
   const dispatch = useDispatch();
 
@@ -17,11 +17,23 @@ const Turn = ({ componentId }) => {
     }
   };
 
+  const handleOnDragStart = (event) => {
+    event.dataTransfer.setData(
+      "text/plain",
+      JSON.stringify({
+        actionType: "TURN",
+        inputValue: angle,
+      })
+    );
+  };
+
   return (
     <div
-      id={componentId}
+      id={actionId}
       className="bg-blue-600 p-2 m-2 text-white rounded-lg flex justify-center"
       onClick={() => handleClick()}
+      draggable
+      onDragStart={handleOnDragStart}
     >
       Turn
       <input

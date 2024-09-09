@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
-const Goto = ({ componentId }) => {
+const Goto = ({ actionId, droppedData }) => {
   const sprite = useSelector((store) => store.sprite);
 
-  const [positionX, setPositionX] = useState(10);
-  const [positionY, setPositionY] = useState(10);
+  const [positionX, setPositionX] = useState(
+    droppedData ? droppedData.inputX : 10
+  );
+  const [positionY, setPositionY] = useState(
+    droppedData ? droppedData.inputY : 10
+  );
 
   const gotoPosition = () => {
     const activeSprite = document.getElementById(sprite.active);
@@ -14,11 +18,24 @@ const Goto = ({ componentId }) => {
     activeSprite.style.top = positionY + "px";
   };
 
+  const handleOnDragStart = (event) => {
+    event.dataTransfer.setData(
+      "text/plain",
+      JSON.stringify({
+        actionType: "GOTO",
+        inputX: positionX,
+        inputY: positionY,
+      })
+    );
+  };
+
   return (
     <button
-      id={componentId}
+      id={actionId}
       className="bg-blue-600 p-2 m-2 text-white rounded-lg flex justify-center"
       onClick={() => gotoPosition()}
+      draggable
+      onDragStart={handleOnDragStart}
     >
       Go to X:
       <input

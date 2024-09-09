@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
-const MoveX = ({ componentId }) => {
+const MoveX = ({ actionId, droppedData }) => {
   const sprite = useSelector((store) => store.sprite);
-  const [steps, setSteps] = useState(10);
+  const [steps, setSteps] = useState(droppedData ? droppedData.inputValue : 10);
 
   const handleClick = () => {
     const currentSprite = document.getElementById(sprite.active);
@@ -13,11 +13,23 @@ const MoveX = ({ componentId }) => {
     currentSprite.style.left = left + steps + "px";
   };
 
+  const handleOnDragStart = (event) => {
+    event.dataTransfer.setData(
+      "text/plain",
+      JSON.stringify({
+        actionType: "MOVEX",
+        inputValue: steps,
+      })
+    );
+  };
+
   return (
     <button
-      id={componentId}
+      id={actionId}
       className="bg-blue-600 p-2 m-2 text-white rounded-lg flex justify-center"
       onClick={() => handleClick()}
+      draggable
+      onDragStart={handleOnDragStart}
     >
       Move X
       <input
