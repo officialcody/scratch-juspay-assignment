@@ -1,17 +1,9 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import useExecutableActions from "../../hooks/useExecutableActions";
 
 const MoveY = ({ actionId, droppedData }) => {
-  const sprite = useSelector((store) => store.sprite);
+  const { moveYBySteps } = useExecutableActions();
   const [steps, setSteps] = useState(droppedData ? droppedData.inputValue : 10);
-
-  const handleClick = () => {
-    const activeSprite = document.getElementById(sprite.active);
-
-    let top = activeSprite.offsetTop;
-    activeSprite.style.position = "relative";
-    activeSprite.style.top = top + steps + "px";
-  };
 
   const handleOnDragStart = (event) => {
     event.dataTransfer.setData(
@@ -27,7 +19,7 @@ const MoveY = ({ actionId, droppedData }) => {
     <button
       id={actionId}
       className="bg-blue-600 p-2 m-2 text-white rounded-lg flex justify-center"
-      onClick={() => handleClick()}
+      onClick={() => moveYBySteps(steps)}
       draggable
       onDragStart={handleOnDragStart}
     >

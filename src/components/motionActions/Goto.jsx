@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import useExecutableActions from "../../hooks/useExecutableActions";
 
 const Goto = ({ actionId, droppedData }) => {
-  const sprite = useSelector((store) => store.sprite);
+  const { gotoPosition } = useExecutableActions();
 
   const [positionX, setPositionX] = useState(
     droppedData ? droppedData.inputX : 10
@@ -10,13 +10,6 @@ const Goto = ({ actionId, droppedData }) => {
   const [positionY, setPositionY] = useState(
     droppedData ? droppedData.inputY : 10
   );
-
-  const gotoPosition = () => {
-    const activeSprite = document.getElementById(sprite.active);
-    activeSprite.style.position = "relative";
-    activeSprite.style.left = positionX + "px";
-    activeSprite.style.top = positionY + "px";
-  };
 
   const handleOnDragStart = (event) => {
     event.dataTransfer.setData(
@@ -33,7 +26,7 @@ const Goto = ({ actionId, droppedData }) => {
     <button
       id={actionId}
       className="bg-blue-600 p-2 m-2 text-white rounded-lg flex justify-center"
-      onClick={() => gotoPosition()}
+      onClick={() => gotoPosition(positionX, positionY)}
       draggable
       onDragStart={handleOnDragStart}
     >

@@ -1,21 +1,10 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { setSpriteAngle } from "../../redux/slices/SpriteSlice";
-import { useSelector } from "react-redux";
+import useExecutableActions from "../../hooks/useExecutableActions";
 
 const Turn = ({ actionId, droppedData }) => {
-  const [angle, setAngle] = useState(droppedData ? droppedData.inputValue : 15);
-  const sprite = useSelector((store) => store.sprite);
-  const dispatch = useDispatch();
+  const { turnByDegrees } = useExecutableActions();
 
-  const handleClick = () => {
-    const el = document.getElementById(sprite.active);
-    const sprite_angle = sprite.sprites.find((x) => x.id === sprite.active);
-    if (sprite_angle) {
-      el.style.transform = `rotate(${sprite_angle.angle + angle}deg)`;
-      dispatch(setSpriteAngle({ angle: sprite_angle.angle + angle }));
-    }
-  };
+  const [angle, setAngle] = useState(droppedData ? droppedData.inputValue : 15);
 
   const handleOnDragStart = (event) => {
     event.dataTransfer.setData(
@@ -31,7 +20,7 @@ const Turn = ({ actionId, droppedData }) => {
     <div
       id={actionId}
       className="bg-blue-600 p-2 m-2 text-white rounded-lg flex justify-center"
-      onClick={() => handleClick()}
+      onClick={() => turnByDegrees(angle)}
       draggable
       onDragStart={handleOnDragStart}
     >
