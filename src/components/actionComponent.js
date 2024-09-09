@@ -1,3 +1,4 @@
+import Repeat from "./controlActions/Repeat";
 import Goto from "./motionActions/Goto";
 import MoveX from "./motionActions/MoveX";
 import MoveY from "./motionActions/MoveY";
@@ -28,6 +29,14 @@ function getActionComponent(spriteKey, actionId, droppedData) {
     case "GOTO":
       return (
         <Goto key={actionId} componentId={actionId} droppedData={droppedData} />
+      );
+    case "REPEAT":
+      return (
+        <Repeat
+          key={actionId}
+          componentId={actionId}
+          droppedData={droppedData}
+        />
       );
     default:
       return null;

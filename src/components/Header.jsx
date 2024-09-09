@@ -1,12 +1,17 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import useExecutableActions from "../hooks/useExecutableActions";
-import { GOTO, MOVEX, MOVEY, TURN } from "../utils/app.constants";
+import { GOTO, MOVEX, MOVEY, REPEAT, TURN } from "../utils/app.constants";
 
 const Header = () => {
   const action = useSelector((store) => store.action);
-  const { moveXBySteps, moveYBySteps, turnByDegrees, gotoPosition } =
-    useExecutableActions();
+  const {
+    moveXBySteps,
+    moveYBySteps,
+    turnByDegrees,
+    gotoPosition,
+    repeatAllActions,
+  } = useExecutableActions();
 
   const handleOnPlay = (event) => {
     action.actions.forEach((activity, index) => {
@@ -27,6 +32,10 @@ const Header = () => {
         setTimeout(() => {
           gotoPosition(droppedData.inputX, droppedData.inputY);
         }, (index + 1) * 1000);
+      } else if (droppedData.actionType === REPEAT) {
+        setTimeout(() => {
+          repeatAllActions(droppedData.inputValue);
+        }, (index + 1) * 1000);
       }
     });
   };
@@ -42,6 +51,7 @@ const Header = () => {
         </a>
         <div className="flex w-full justify-end">
           <button
+            id="play-btn"
             className="bg-green-600 text-white p-2 rounded-lg justify-self-end"
             onClick={handleOnPlay}
           >

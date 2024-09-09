@@ -1,9 +1,13 @@
 import { useSelector } from "react-redux";
 import { setSpriteAngle } from "../redux/slices/SpriteSlice";
 import { useDispatch } from "react-redux";
+import { setActions } from "../redux/slices/ActionSlice";
+import { REPEAT } from "../utils/app.constants";
 
 const useExecutableActions = () => {
   const sprite = useSelector((store) => store.sprite);
+  const action = useSelector((store) => store.action);
+
   const dispatch = useDispatch();
 
   const moveXBySteps = (steps) => {
@@ -38,7 +42,28 @@ const useExecutableActions = () => {
     activeSprite.style.top = positionY + "px";
   };
 
-  return { sprite, moveXBySteps, moveYBySteps, turnByDegrees, gotoPosition };
+  const repeatAllActions = async (times) => {
+    const actionsWithoutRepeat = action.actions.filter(
+      (action) => action.droppedData.actionType !== REPEAT
+    );
+    let actions = [...actionsWithoutRepeat];
+    for (let i = 0; i < times - 1; i++) {
+      actions.push(...actionsWithoutRepeat);
+    }
+    const playButton = document.getElementById("play-btn");
+
+    const createActions = await dispatch(setActions(actions));
+    createActions && playButton.click();
+  };
+
+  return {
+    sprite,
+    moveXBySteps,
+    moveYBySteps,
+    turnByDegrees,
+    gotoPosition,
+    repeatAllActions,
+  };
 };
 
 export default useExecutableActions;

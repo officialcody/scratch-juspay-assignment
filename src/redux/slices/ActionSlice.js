@@ -9,9 +9,12 @@ const ActionSlice = createSlice({
     addAction: (state, action) => {
       state.actions = [...state.actions, action.payload];
     },
+    setActions: (state, action) => {
+      state.actions = action.payload;
+    },
   },
 });
 
-export const { addAction } = ActionSlice.actions;
+export const { addAction, setActions } = ActionSlice.actions;
 
 export default ActionSlice.reducer;
