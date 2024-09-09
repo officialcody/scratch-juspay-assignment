@@ -57,14 +57,14 @@ const Header = () => {
         <div className="flex w-full justify-end">
           <button
             id="play-btn"
-            className="bg-green-600 text-white p-2 rounded-lg justify-self-end"
+            className="bg-green-600 text-white p-2 rounded-lg justify-self-end mx-2"
             onClick={() => handleOnPlay(sprite.active)}
           >
             Play
           </button>
           <button
             id="play-sprites"
-            className="bg-green-600 text-white p-2 rounded-lg justify-self-end"
+            className="bg-green-600 text-white p-2 rounded-lg justify-self-end mx-2"
             onClick={handlePlayAll}
           >
             Play All Sprites
