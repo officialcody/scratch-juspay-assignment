@@ -45,7 +45,7 @@ const PlaygroundArea = () => {
   return (
     <>
       <div className="flex flex-col col-span-2">
-        <div className="bg-gray-100 p-4 rounded-lg overflow-hidden w-full h-[70%]">
+        <div className="bg-gray-100 p-4 rounded-lg overflow-hidden w-full h-[60%]">
           <div
             className="relative w-full h-full"
             ref={containerRef}
@@ -65,15 +65,17 @@ const PlaygroundArea = () => {
             ))}
           </div>
         </div>
-        <div className="w-full text-center">
-          Active Sprite: {sprite.active}
+        <div className="w-full text-center flex flex-col justify-center">
+          <h1 className="text-xl p-2 my-2">Active Sprite: {sprite.active}</h1>
           <button
-            className="bg-blue-500 rounded-lg p-2 text-white w-full"
+            className="bg-blue-500 rounded-lg p-2 text-white w-36 mx-auto"
             onClick={() => dispatch(addSprite())}
           >
             Add
           </button>
-          Total Sprites: {sprite.sprites.length}
+          <h1 className="text-xl p-2 my-2">
+            Total Sprites: {sprite.sprites.length}
+          </h1>
         </div>
       </div>
     </>
