@@ -8,11 +8,11 @@ const Sidebar = () => {
     <div className="grid grid-cols-3">
       <div className="w-full bg-gray-200 h-screen text-center py-2 rounded-s-lg border-r-2 border-r-gray-900">
         <div className="font-bold text-xl p-2">Actions</div>
-        <nav className="p-4">
+        <nav className="p-4 flex flex-col justify-center">
           {Object.keys(ACTION_CATEGORIES).map((category, index) => (
             <button
               key={category + index}
-              className="w-16 h-16 border-2 border-black border-solid rounded-md bg-white my-4"
+              className="w-16 h-16 border-2 border-black border-solid rounded-md bg-white my-4 mx-auto"
               onClick={(event) => setActionCategory(category)}
             >
               <button>{category}</button>
