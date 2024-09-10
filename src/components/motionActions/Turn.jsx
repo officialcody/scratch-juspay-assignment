@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import useExecutableActions from "../../hooks/useExecutableActions";
 import { useSelector } from "react-redux";
 
-const Turn = ({ actionId, droppedData }) => {
+const Turn = ({ actionId, droppedData, draggable }) => {
   const sprite = useSelector((store) => store.sprite);
   const { turnByDegrees } = useExecutableActions();
 
@@ -23,7 +23,7 @@ const Turn = ({ actionId, droppedData }) => {
       id={actionId}
       className="bg-blue-600 p-2 m-2 text-white rounded-lg flex justify-center"
       onClick={() => turnByDegrees(angle, sprite.active)}
-      draggable
+      draggable={draggable}
       onDragStart={handleOnDragStart}
     >
       Turn

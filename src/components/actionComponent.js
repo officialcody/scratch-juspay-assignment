@@ -4,7 +4,7 @@ import MoveX from "./motionActions/MoveX";
 import MoveY from "./motionActions/MoveY";
 import Turn from "./motionActions/Turn";
 
-function getActionComponent(spriteKey, actionId, droppedData) {
+function getActionComponent(spriteKey, actionId, droppedData, draggable) {
   switch (spriteKey) {
     case "MOVEX":
       return (
@@ -12,11 +12,17 @@ function getActionComponent(spriteKey, actionId, droppedData) {
           key={actionId}
           componentId={actionId}
           droppedData={droppedData}
+          draggable={draggable}
         />
       );
     case "TURN":
       return (
-        <Turn key={actionId} componentId={actionId} droppedData={droppedData} />
+        <Turn
+          key={actionId}
+          componentId={actionId}
+          droppedData={droppedData}
+          draggable={draggable}
+        />
       );
     case "MOVEY":
       return (
@@ -24,11 +30,17 @@ function getActionComponent(spriteKey, actionId, droppedData) {
           key={actionId}
           componentId={actionId}
           droppedData={droppedData}
+          draggable={draggable}
         />
       );
     case "GOTO":
       return (
-        <Goto key={actionId} componentId={actionId} droppedData={droppedData} />
+        <Goto
+          key={actionId}
+          componentId={actionId}
+          droppedData={droppedData}
+          draggable={draggable}
+        />
       );
     case "REPEAT":
       return (
@@ -36,6 +48,7 @@ function getActionComponent(spriteKey, actionId, droppedData) {
           key={actionId}
           componentId={actionId}
           droppedData={droppedData}
+          draggable={draggable}
         />
       );
     default:

@@ -25,7 +25,7 @@ const Sidebar = () => {
           Animation Options
         </h1>
         {ACTION_CATEGORIES[actionCategory].map((action, index) =>
-          getActionComponent(action, `${action}-${index}`)
+          getActionComponent(action, `${action}-${index}`, null, true)
         )}
       </div>
     </div>

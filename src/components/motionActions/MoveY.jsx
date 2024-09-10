@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import useExecutableActions from "../../hooks/useExecutableActions";
 import { useSelector } from "react-redux";
 
-const MoveY = ({ actionId, droppedData }) => {
+const MoveY = ({ actionId, droppedData, draggable }) => {
   const sprite = useSelector((store) => store.sprite);
   const { moveYBySteps } = useExecutableActions();
   const [steps, setSteps] = useState(droppedData ? droppedData.inputValue : 10);
@@ -22,7 +22,7 @@ const MoveY = ({ actionId, droppedData }) => {
       id={actionId}
       className="bg-blue-600 p-2 m-2 text-white rounded-lg flex justify-center"
       onClick={() => moveYBySteps(steps, sprite.active)}
-      draggable
+      draggable={draggable}
       onDragStart={handleOnDragStart}
     >
       Move Y

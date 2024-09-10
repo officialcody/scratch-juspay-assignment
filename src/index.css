@@ -10,3 +10,8 @@
 .remove-arrow {
   -moz-appearance: textfield !important;
 }
+
+.motion-border,
+.control-border {
+  border: 2px solid black;
+}

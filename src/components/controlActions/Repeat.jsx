@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import useExecutableActions from "../../hooks/useExecutableActions";
 
-const Repeat = ({ actionId, droppedData }) => {
+const Repeat = ({ actionId, droppedData, draggable }) => {
   const { repeatAllActions } = useExecutableActions();
   const [repeatNumber, setRepeatNumber] = useState(
     droppedData ? droppedData.inputValue : 10
@@ -22,7 +22,7 @@ const Repeat = ({ actionId, droppedData }) => {
       id={actionId}
       className="bg-blue-600 p-2 m-2 text-white rounded-lg flex justify-center"
       onClick={() => repeatAllActions(repeatNumber)}
-      draggable
+      draggable={draggable}
       onDragStart={handleOnDragStart}
     >
       Repeat

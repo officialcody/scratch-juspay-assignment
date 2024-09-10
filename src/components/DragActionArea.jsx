@@ -29,7 +29,8 @@ const DragActionArea = () => {
           getActionComponent(
             act.droppedData.actionType,
             `${act.droppedData.actionType}-${index}`,
-            act.droppedData
+            act.droppedData,
+            false
           )
         )}
     </div>
