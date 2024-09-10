@@ -62,13 +62,15 @@ const Header = () => {
           >
             Play
           </button>
-          <button
-            id="play-sprites"
-            className="bg-green-600 text-white p-2 rounded-lg justify-self-end mx-2"
-            onClick={handlePlayAll}
-          >
-            Play All Sprites
-          </button>
+          {sprite && sprite.sprites.length > 1 && (
+            <button
+              id="play-sprites"
+              className="bg-green-600 text-white p-2 rounded-lg justify-self-end mx-2"
+              onClick={handlePlayAll}
+            >
+              Play All Sprites
+            </button>
+          )}
         </div>
       </div>
     </header>
