@@ -10,7 +10,7 @@ export default function CatSprite({
     <div
       id={spriteId}
       onClick={onClick}
-      className="absolute"
+      className="absolute w-max"
       onMouseDown={onMouseDown}
       style={{ transform: `translate(${position.x}px, ${position.y}px)` }}
     >
