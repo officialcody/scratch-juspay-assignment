@@ -1,48 +1,17 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import useExecutableActions from "../hooks/useExecutableActions";
-import { GOTO, MOVEX, MOVEY, REPEAT, TURN } from "../utils/app.constants";
-import { useDispatch } from "react-redux";
-import { setAnimations } from "../redux/slices/SpriteSlice";
+import useExecutableAnimations from "../hooks/useExecutableAnimations";
 
 const Header = () => {
   const sprite = useSelector((store) => store.sprite);
-  const action = useSelector((store) => store.action);
-  const dispatch = useDispatch();
-
-  const {
-    moveXBySteps,
-    moveYBySteps,
-    turnByDegrees,
-    gotoPosition,
-    repeatAllActions,
-  } = useExecutableActions();
+  const { executeAnimations } = useExecutableAnimations();
 
   const handleOnPlay = (spriteId) => {
     const currentSprite = sprite.sprites.find((sp) => sp.id === spriteId);
-    currentSprite.animations.forEach((animation) => {
-      if (animation.actionType === MOVEX) {
-        moveXBySteps(animation.inputValue, spriteId);
-      } else if (animation.actionType === MOVEY) {
-        moveYBySteps(animation.inputValue, spriteId);
-      } else if (animation.actionType === TURN) {
-        turnByDegrees(animation.inputValue, spriteId);
-      } else if (animation.actionType === GOTO) {
-        gotoPosition(animation.inputX, animation.inputY, spriteId);
-      } else if (animation.actionType === REPEAT) {
-        repeatAllActions(animation.inputValue);
-      }
-    });
-  };
-
-  const handlePlayAll = async () => {
-    const addAnimations = await dispatch(
-      setAnimations({ actions: action.actions })
-    );
-    addAnimations &&
-      sprite.sprites.forEach((sprite) => {
-        handleOnPlay(sprite.id);
-      });
+    if (currentSprite.animations.length < 1) {
+      return;
+    }
+    executeAnimations(currentSprite.animations, currentSprite.id);
   };
 
   return (
@@ -62,15 +31,6 @@ const Header = () => {
           >
             Play
           </button>
-          {sprite && sprite.sprites.length > 1 && (
-            <button
-              id="play-sprites"
-              className="bg-green-600 text-white p-2 rounded-lg justify-self-end mx-2"
-              onClick={handlePlayAll}
-            >
-              Play All Sprites
-            </button>
-          )}
         </div>
       </div>
     </header>

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import useExecutableActions from "../../hooks/useExecutableActions";
+import useExecutableAnimations from "../../hooks/useExecutableAnimations";
 import { useSelector } from "react-redux";
 
 const Turn = ({ actionId, droppedData, draggable }) => {
   const sprite = useSelector((store) => store.sprite);
-  const { turnByDegrees } = useExecutableActions();
+  const { turnByDegrees } = useExecutableAnimations();
 
   const [angle, setAngle] = useState(droppedData ? droppedData.inputValue : 15);
 

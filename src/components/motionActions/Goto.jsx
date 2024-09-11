@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import useExecutableActions from "../../hooks/useExecutableActions";
+import useExecutableAnimations from "../../hooks/useExecutableAnimations";
 import { useSelector } from "react-redux";
 
 const Goto = ({ actionId, droppedData, draggable }) => {
   const sprite = useSelector((store) => store.sprite);
-  const { gotoPosition } = useExecutableActions();
+  const { gotoPosition } = useExecutableAnimations();
 
   const [positionX, setPositionX] = useState(
     droppedData ? droppedData.inputX : 10

@@ -35,11 +35,6 @@ const SpriteSlice = createSlice({
         state.sprites[current_sprite_index] = current_sprite;
       }
     },
-    setAnimations: (state, action) => {
-      state.sprites.forEach((sprite) => {
-        sprite.animations = action.payload.actions;
-      });
-    },
     setSpriteAnimation: (state, action) => {
       let spritesArray = state.sprites;
       let current_sprite = spritesArray.find(
@@ -76,7 +71,6 @@ export const {
   addSprite,
   setSpriteAngle,
   setActiveSprite,
-  setAnimations,
   setSpriteAnimation,
   setSpritePosition,
 } = SpriteSlice.actions;

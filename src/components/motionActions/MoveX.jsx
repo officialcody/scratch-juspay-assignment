@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import useExecutableActions from "../../hooks/useExecutableActions";
+import useExecutableAnimations from "../../hooks/useExecutableAnimations";
 import { useSelector } from "react-redux";
 
 const MoveX = ({ actionId, droppedData, draggable }) => {
   const sprite = useSelector((store) => store.sprite);
-  const { moveXBySteps } = useExecutableActions();
+  const { moveXBySteps } = useExecutableAnimations();
   const [steps, setSteps] = useState(droppedData ? droppedData.inputValue : 10);
 
   const handleOnDragStart = (event) => {

@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import useExecutableActions from "../../hooks/useExecutableActions";
+import useExecutableAnimations from "../../hooks/useExecutableAnimations";
+import { useSelector } from "react-redux";
 
 const Repeat = ({ actionId, droppedData, draggable }) => {
-  const { repeatAllActions } = useExecutableActions();
+  const sprite = useSelector((store) => store.sprite);
+  const { executeAnimations } = useExecutableAnimations();
   const [repeatNumber, setRepeatNumber] = useState(
     droppedData ? droppedData.inputValue : 10
   );
@@ -17,11 +19,20 @@ const Repeat = ({ actionId, droppedData, draggable }) => {
     );
   };
 
+  const handleOnClickRepeat = (event) => {
+    const currentSprite = sprite.sprites.find((sp) => sp.id === sprite.active);
+
+    if (currentSprite.animations.length < 1) {
+      return;
+    }
+    executeAnimations(currentSprite.animations, currentSprite.id);
+  };
+
   return (
     <button
       id={actionId}
       className="bg-blue-600 p-2 m-2 text-white rounded-lg flex justify-center"
-      onClick={() => repeatAllActions(repeatNumber)}
+      onClick={handleOnClickRepeat}
       draggable={draggable}
       onDragStart={handleOnDragStart}
     >
