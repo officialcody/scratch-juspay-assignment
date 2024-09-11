@@ -2,7 +2,11 @@ import React, { useRef, useState } from "react";
 import CatSprite from "../sprites/CatSprite";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { addSprite, setActiveSprite } from "../redux/slices/SpriteSlice";
+import {
+  addSprite,
+  setActiveSprite,
+  setSpritePosition,
+} from "../redux/slices/SpriteSlice";
 
 const PlaygroundArea = () => {
   const sprite = useSelector((store) => store.sprite);
@@ -10,7 +14,6 @@ const PlaygroundArea = () => {
 
   const containerRef = useRef(null);
 
-  const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
 
@@ -35,11 +38,16 @@ const PlaygroundArea = () => {
     newX = Math.max(0, Math.min(newX, container.width - 100));
     newY = Math.max(0, Math.min(newY, container.height - 100));
 
-    setPosition({ x: newX, y: newY });
+    dispatch(setSpritePosition({ x: newX, y: newY }));
   };
 
   const handleMouseUp = () => {
     setIsDragging(false);
+  };
+
+  const handleAddSprite = (event) => {
+    const prevSprites = sprite.sprites.length;
+    dispatch(addSprite({ prev: prevSprites }));
   };
 
   return (
@@ -58,7 +66,7 @@ const PlaygroundArea = () => {
                 key={"sprite-" + sprite.id}
                 spriteId={sprite.id}
                 index={index}
-                position={position}
+                position={sprite.position}
                 onClick={() => dispatch(setActiveSprite({ id: sprite.id }))}
                 onMouseDown={handleMouseDown}
               />
@@ -69,7 +77,7 @@ const PlaygroundArea = () => {
           <h1 className="text-xl p-2 my-2">Active Sprite: {sprite.active}</h1>
           <button
             className="bg-blue-500 rounded-lg p-2 text-white w-36 mx-auto"
-            onClick={() => dispatch(addSprite())}
+            onClick={handleAddSprite}
           >
             Add
           </button>

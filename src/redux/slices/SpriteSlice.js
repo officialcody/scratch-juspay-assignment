@@ -3,7 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const SpriteSlice = createSlice({
   name: "sprite",
   initialState: {
-    sprites: [{ id: "catSprite", angle: 0, animations: [] }],
+    sprites: [
+      { id: "catSprite", position: { x: 0, y: 0 }, angle: 0, animations: [] },
+    ],
     active: "catSprite",
   },
   reducers: {
@@ -13,6 +15,7 @@ const SpriteSlice = createSlice({
         id: `sprite${state.sprites.length}`,
         angle: 0,
         animations: [],
+        position: { x: 0, y: action.payload.prev * 80 },
       });
       state.sprites = spriteArray;
     },
@@ -53,6 +56,19 @@ const SpriteSlice = createSlice({
         state.sprites[current_sprite_index] = current_sprite;
       }
     },
+    setSpritePosition: (state, action) => {
+      let spritesArray = state.sprites;
+      let current_sprite = spritesArray.find(
+        (sprite) => sprite.id === state.active
+      );
+      let current_sprite_index = spritesArray.findIndex(
+        (sprite) => sprite.id === state.active
+      );
+      if (current_sprite_index > -1) {
+        current_sprite.position = { x: action.payload.x, y: action.payload.y };
+        state.sprites[current_sprite_index] = current_sprite;
+      }
+    },
   },
 });
 
@@ -62,6 +78,7 @@ export const {
   setActiveSprite,
   setAnimations,
   setSpriteAnimation,
+  setSpritePosition,
 } = SpriteSlice.actions;
 
 export default SpriteSlice.reducer;
