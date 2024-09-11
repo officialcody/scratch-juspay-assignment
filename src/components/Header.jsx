@@ -18,19 +18,19 @@ const Header = () => {
     repeatAllActions,
   } = useExecutableActions();
 
-  const handleOnPlay = (sprite) => {
-    action.actions.forEach((activity) => {
-      const { droppedData } = activity;
-      if (droppedData.actionType === MOVEX) {
-        moveXBySteps(droppedData.inputValue, sprite);
-      } else if (droppedData.actionType === MOVEY) {
-        moveYBySteps(droppedData.inputValue, sprite);
-      } else if (droppedData.actionType === TURN) {
-        turnByDegrees(droppedData.inputValue, sprite);
-      } else if (droppedData.actionType === GOTO) {
-        gotoPosition(droppedData.inputX, droppedData.inputY, sprite);
-      } else if (droppedData.actionType === REPEAT) {
-        repeatAllActions(droppedData.inputValue);
+  const handleOnPlay = (spriteId) => {
+    const currentSprite = sprite.sprites.find((sp) => sp.id === spriteId);
+    currentSprite.animations.forEach((animation) => {
+      if (animation.actionType === MOVEX) {
+        moveXBySteps(animation.inputValue, spriteId);
+      } else if (animation.actionType === MOVEY) {
+        moveYBySteps(animation.inputValue, spriteId);
+      } else if (animation.actionType === TURN) {
+        turnByDegrees(animation.inputValue, spriteId);
+      } else if (animation.actionType === GOTO) {
+        gotoPosition(animation.inputX, animation.inputY, spriteId);
+      } else if (animation.actionType === REPEAT) {
+        repeatAllActions(animation.inputValue);
       }
     });
   };

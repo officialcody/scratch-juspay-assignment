@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
-import { addAction } from "../redux/slices/ActionSlice";
 import { useDispatch } from "react-redux";
 import getActionComponent from "./actionComponent";
 import { setSpriteAnimation } from "../redux/slices/SpriteSlice";
 
 const DragActionArea = () => {
-  const action = useSelector((store) => store.action);
+  const sprite = useSelector((store) => store.sprite);
+
+  const activeSpriteAnimations = useMemo(() => {
+    const activeSprite = sprite.sprites.find((sp) => sp.id === sprite.active);
+    return activeSprite.animations;
+  }, [sprite]);
+
   const dispatch = useDispatch();
 
   const handleOnDrop = (event) => {
@@ -25,12 +30,12 @@ const DragActionArea = () => {
       <h1 className="text-2xl font-bold text-center my-2">
         Drag Animations here
       </h1>
-      {action &&
-        action.actions.map((act, index) =>
+      {activeSpriteAnimations &&
+        activeSpriteAnimations.map((act, index) =>
           getActionComponent(
-            act.droppedData.actionType,
-            `${act.droppedData.actionType}-${index}`,
-            act.droppedData,
+            act.actionType,
+            `${act.actionType}-${index}`,
+            act,
             false
           )
         )}
