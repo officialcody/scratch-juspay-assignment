@@ -15,7 +15,7 @@ const SpriteSlice = createSlice({
         id: `sprite${state.sprites.length}`,
         angle: 0,
         animations: [],
-        position: { x: 0, y: action.payload.prev * 80 },
+        position: { x: 0, y: action.payload.prev * 110 },
       });
       state.sprites = spriteArray;
     },
