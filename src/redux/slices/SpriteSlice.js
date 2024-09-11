@@ -37,10 +37,31 @@ const SpriteSlice = createSlice({
         sprite.animations = action.payload.actions;
       });
     },
+    setSpriteAnimation: (state, action) => {
+      let spritesArray = state.sprites;
+      let current_sprite = spritesArray.find(
+        (sprite) => sprite.id === state.active
+      );
+      let current_sprite_index = spritesArray.findIndex(
+        (sprite) => sprite.id === state.active
+      );
+      if (current_sprite_index > -1) {
+        current_sprite.animations = [
+          ...current_sprite.animations,
+          action.payload,
+        ];
+        state.sprites[current_sprite_index] = current_sprite;
+      }
+    },
   },
 });
 
-export const { addSprite, setSpriteAngle, setActiveSprite, setAnimations } =
-  SpriteSlice.actions;
+export const {
+  addSprite,
+  setSpriteAngle,
+  setActiveSprite,
+  setAnimations,
+  setSpriteAnimation,
+} = SpriteSlice.actions;
 
 export default SpriteSlice.reducer;

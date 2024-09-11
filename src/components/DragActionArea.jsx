@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { addAction } from "../redux/slices/ActionSlice";
 import { useDispatch } from "react-redux";
 import getActionComponent from "./actionComponent";
+import { setSpriteAnimation } from "../redux/slices/SpriteSlice";
 
 const DragActionArea = () => {
   const action = useSelector((store) => store.action);
@@ -12,7 +13,7 @@ const DragActionArea = () => {
     event.preventDefault();
     const data = event.dataTransfer.getData("text/plain");
     const droppedData = JSON.parse(data);
-    dispatch(addAction({ droppedData: droppedData }));
+    dispatch(setSpriteAnimation({ ...droppedData }));
   };
 
   return (
