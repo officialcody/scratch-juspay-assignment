@@ -11,7 +11,13 @@ const Header = () => {
     if (currentSprite.animations.length < 1) {
       return;
     }
-    executeAnimations(currentSprite.animations, currentSprite.id);
+    if (sprite.sprites.length === 1) {
+      executeAnimations(currentSprite.animations, currentSprite.id);
+    } else {
+      sprite.sprites.forEach((sp) => {
+        executeAnimations(sp.animations, sp.id);
+      });
+    }
   };
 
   return (
