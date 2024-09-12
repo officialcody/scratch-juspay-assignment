@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { setSpriteAngle } from "../redux/slices/SpriteSlice";
+import { setBoundingRect, setSpriteAngle } from "../redux/slices/SpriteSlice";
 import { useDispatch } from "react-redux";
 import { GOTO, MOVEX, MOVEY, REPEAT, TURN } from "../utils/app.constants";
 
@@ -9,17 +9,36 @@ const useExecutableAnimations = () => {
   const dispatch = useDispatch();
 
   const moveXBySteps = (steps, spriteId) => {
-    const currentSprite = document.getElementById(spriteId);
-
-    let left = currentSprite.offsetLeft;
-    currentSprite.style.left = left + steps + "px";
+    const currentSpriteContainer = document.getElementById(spriteId);
+    let left = currentSpriteContainer.offsetLeft;
+    currentSpriteContainer.style.left = left + steps + "px";
+    const rect = currentSpriteContainer.getBoundingClientRect();
+    dispatch(
+      setBoundingRect({
+        currentSprite: spriteId,
+        top: rect.top,
+        left: rect.left,
+        right: rect.right,
+        bottom: rect.bottom,
+      })
+    );
   };
 
   const moveYBySteps = (steps, spriteId) => {
     const activeSprite = document.getElementById(spriteId);
+    const rect = activeSprite.getBoundingClientRect();
 
     let top = activeSprite.offsetTop;
     activeSprite.style.top = top + steps + "px";
+    dispatch(
+      setBoundingRect({
+        currentSprite: spriteId,
+        top: rect.top,
+        left: rect.left,
+        right: rect.right,
+        bottom: rect.bottom,
+      })
+    );
   };
 
   const turnByDegrees = (angle, spriteId) => {
@@ -33,8 +52,19 @@ const useExecutableAnimations = () => {
 
   const gotoPosition = (positionX, positionY, spriteId) => {
     const activeSprite = document.getElementById(spriteId);
+    const rect = activeSprite.getBoundingClientRect();
     activeSprite.style.left = positionX + "px";
     activeSprite.style.top = positionY + "px";
+
+    dispatch(
+      setBoundingRect({
+        currentSprite: spriteId,
+        top: rect.top,
+        left: rect.left,
+        right: rect.right,
+        bottom: rect.bottom,
+      })
+    );
   };
 
   const getRepeatAnimations = (times) => {

@@ -1,17 +1,11 @@
 import React from "react";
 
-export default function CatSprite({
-  spriteId,
-  onClick,
-  onMouseDown,
-  position,
-}) {
+export default function CatSprite({ spriteId, onClick, position }) {
   return (
     <div
       id={spriteId}
       onClick={onClick}
       className="absolute w-max"
-      onMouseDown={onMouseDown}
       style={{ transform: `translate(${position.x}px, ${position.y}px)` }}
     >
       <svg

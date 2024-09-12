@@ -8,10 +8,10 @@ const Header = () => {
 
   const handleOnPlay = (spriteId) => {
     const currentSprite = sprite.sprites.find((sp) => sp.id === spriteId);
-    if (currentSprite.animations.length < 1) {
-      return;
-    }
     if (sprite.sprites.length === 1) {
+      if (currentSprite.animations.length < 1) {
+        return;
+      }
       executeAnimations(currentSprite.animations, currentSprite.id);
     } else {
       sprite.sprites.forEach((sp) => {
